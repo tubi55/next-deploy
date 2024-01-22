@@ -73,6 +73,25 @@ export const {
 			}
 			if (account.provider === 'google') {
 				console.log('google', account);
+				console.log('google profile', profile);
+				connectDB();
+
+				try {
+					const user = await User.findOne({ email: profile.email });
+
+					if (!user) {
+						const newUser = new User({
+							username: profile.name,
+							email: profile.email,
+							img: profile.picture
+						});
+
+						await newUser.save();
+					}
+				} catch (err) {
+					console.log(err);
+					return false;
+				}
 			}
 			return true;
 		},
