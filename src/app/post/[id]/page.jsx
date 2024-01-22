@@ -22,7 +22,8 @@ export default async function PostDetail({ params }) {
 				<div className={clsx(styles.txt)}>
 					<h2>{post.title}</h2>
 					<p>{post.desc}</p>
-					<p>글작성일: {JSON.stringify(post.createdAt)} </p>
+					<p>글작성일: {new Date(post.createdAt).toLocaleString()} </p>
+					<p>글수정일: {new Date(post.updatedAt).toLocaleString()} </p>
 					{post && (
 						<Suspense fallback={<p>Loading...</p>}>
 							<UserInfo email={post.email} />
