@@ -11,8 +11,7 @@ export default async function PostDetail({ params }) {
 	const { id } = params;
 	const post = await getPosts(id);
 	const session = await auth();
-
-	console.log('owner', session);
+	console.log(JSON.stringify(post.createdAt));
 
 	return (
 		<section className={clsx(styles.postDetail)}>
@@ -23,6 +22,7 @@ export default async function PostDetail({ params }) {
 				<div className={clsx(styles.txt)}>
 					<h2>{post.title}</h2>
 					<p>{post.desc}</p>
+					<p>글작성일: {JSON.stringify(post.createdAt)} </p>
 					{post && (
 						<Suspense fallback={<p>Loading...</p>}>
 							<UserInfo email={post.email} />
