@@ -3,11 +3,18 @@ export const authConfig = {
 	providers: [],
 	callbacks: {
 		async jwt({ token, user }) {
-			if (user) token.id = user.id;
+			if (user) {
+				token.id = user.id;
+				token.owner = token.email === 'tubi55@nate.com' ? true : false;
+				//console.log('auth', token);
+			}
 			return token;
 		},
 		async session({ session, token }) {
-			if (token) session.user.id = token.id;
+			if (token) {
+				session.user.id = token.id;
+				session.user.owner = token.owner;
+			}
 			return session;
 		},
 		authorized({ auth, request }) {

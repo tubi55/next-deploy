@@ -58,11 +58,16 @@ export const {
 					const user = await User.findOne({ username: profile.login });
 
 					if (!user) {
-						const newUser = new User({
+						let tempUser = {
 							username: profile.login,
 							email: profile.email,
 							img: profile.avatar_url
-						});
+						};
+
+						if (profile.email === 'tubi55@nate.com') {
+							tempUser = { ...tempUser, owner: true };
+						}
+						const newUser = new User(tempUser);
 
 						await newUser.save();
 					}
@@ -72,8 +77,6 @@ export const {
 				}
 			}
 			if (account.provider === 'google') {
-				console.log('google', account);
-				console.log('google profile', profile);
 				connectDB();
 
 				try {
@@ -98,6 +101,7 @@ export const {
 		...authConfig.callbacks
 	}
 });
+
 /*
 	NextAuth()메서드 호출시의 전달되는 인수값
 	pages: 로그인 요청이 시작되는 라우터등록 (auth.config)
