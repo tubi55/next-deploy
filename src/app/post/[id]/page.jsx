@@ -30,7 +30,7 @@ export default async function PostDetail({ params }) {
 						</Suspense>
 					)}
 
-					{session?.user.email === post.email && (
+					{(session?.user.email === post.email || session?.user.owner === true) && (
 						<nav>
 							<Link href={`/post/edit/${id}`}>Edit</Link>
 							<form action={deletePost}>
